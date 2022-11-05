@@ -1,18 +1,24 @@
-import { Request, Response } from "express";
-import { TodoService } from "./todo.service";
+import { Todo } from "./todo.entity";
+import { ITodoService } from "./todo.service";
 
-export class TodoController {
-  _todoService: TodoService;
+export interface ITodoController {
+  getTodos: () => Promise<Todo[]>;
+  create: (dto?: any) => Promise<any>;
+}
 
-  constructor({ _todoService }: { _todoService: TodoService }) {
+export class TodoController implements ITodoController {
+  _todoService: ITodoService;
+
+  constructor({ _todoService }: { _todoService: ITodoService }) {
     this._todoService = _todoService;
-    this.getTodos = this.getTodos.bind(this);
   }
 
-  async getTodos(req: Request, res: Response) {
+  async getTodos() {
     const results = await this._todoService.list();
-    return res.json({
-      data: results,
-    });
+    return results;
+  }
+
+  async create(dto?: any) {
+    return Promise.resolve({});
   }
 }

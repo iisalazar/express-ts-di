@@ -7,7 +7,9 @@ export interface ITodo {
   updatedAt: string;
 }
 
-@Entity("todo")
+@Entity({
+  name: "todo",
+})
 export class Todo implements ITodo {
   @PrimaryGeneratedColumn()
   id: number;

@@ -1,7 +1,7 @@
 import { DataSource, DataSourceOptions } from "typeorm";
 import { Todo } from "../modules/todo/todo.entity";
 
-export function createDataSource(overrideConfig?: DataSourceOptions) {
+export function createDataSource(overrideConfig?: Partial<DataSourceOptions>) {
   let options: DataSourceOptions = {
     type: "mysql",
     synchronize: true,
@@ -21,7 +21,8 @@ export function createDataSource(overrideConfig?: DataSourceOptions) {
       port: +(process.env.MYSQL_PORT || 3306),
     });
   if (overrideConfig) {
-    options = { ...overrideConfig };
+    Object.assign(options, { ...overrideConfig });
   }
+
   return new DataSource(options);
 }

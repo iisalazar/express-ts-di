@@ -1,7 +1,7 @@
 import { App } from "./app";
-import { dataSource } from "./data-source";
+import { appDataSource } from "./data-source";
 function bootstrap() {
-  dataSource
+  appDataSource
     .initialize()
     .then(() => {
       console.log("Successfully connected to database");
