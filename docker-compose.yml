@@ -1,0 +1,35 @@
+version: "3"
+services:
+  cas-db:
+    image: "mysql:5.7.10"
+    container_name: cas-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-admin}"
+      MYSQL_USER: "${MYSQL_USERNAME:-cas}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-cas}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE:-cas}"
+  # cas-app:
+  #   image: cas:backend
+  #   container_name: cas-mono-server
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - MYSQL_CONNECT_URL=http://cas:cas@cas-db:3306/cas
+  #       - CLOUDINARY_CLOUD_NAME=cas-dev-cloud-storage
+  #       - CLOUDINARY_API_KEY=598799362394336
+  #       - CLOUDINARY_API_SECRET=eLVBqEN5OCPzy7irOurtqDWYZ8c
+  #       - PORT=8000
+  #       # - WAIT_HOSTS=cas-db:3306
+  #   volumes:
+  #     - ./src:/app/src
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - cas-db
+          
+    
+      
+  
