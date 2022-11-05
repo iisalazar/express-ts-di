@@ -1,23 +1,22 @@
 import express from "express";
-import { InversifyExpressServer } from "inversify-express-utils";
-import { container } from "./di-container";
+import { router } from "./routes";
 import "reflect-metadata";
+
 export class App {
   private app: express.Application;
   private port: number = +(process.env.PORT || 3000);
 
   constructor() {
-    const server = new InversifyExpressServer(container);
-
-    server.setConfig((app) => {
-      app.use(express.json());
-    });
-
-    this.app = server.build();
+    this.app = express();
+    this.registerRoutes();
   }
 
   public getApp(): express.Application {
     return this.app;
+  }
+
+  private registerRoutes() {
+    this.app.use(router);
   }
 
   public run() {

@@ -2,14 +2,14 @@ version: "3"
 services:
   cas-db:
     image: "mysql:5.7.10"
-    container_name: cas-db
+    container_name: dev-db
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-admin}"
-      MYSQL_USER: "${MYSQL_USERNAME:-cas}"
-      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-cas}"
-      MYSQL_DATABASE: "${MYSQL_DATABASE:-cas}"
+      MYSQL_USER: "${MYSQL_USERNAME:-dev}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-dev}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE:-dev}"
   # cas-app:
   #   image: cas:backend
   #   container_name: cas-mono-server
