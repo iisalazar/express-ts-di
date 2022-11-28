@@ -1,7 +1,24 @@
 import { ITodoService } from "./todo.service";
 import { ITodoController, TodoController } from "./todo.controller";
+import { ITodo } from "./todo.entity";
+import { CreateTodoDTO, UpdateTodoDTO } from "./todo.repository";
 
 class MockTodoService implements ITodoService {
+  create(dto: CreateTodoDTO): Promise<ITodo> {
+    return Promise.resolve({
+      ...dto,
+      id: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  }
+  update(dto: UpdateTodoDTO): Promise<ITodo> {
+    return Promise.resolve({
+      ...dto,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  }
   list() {
     return Promise.resolve([]);
   }
@@ -41,4 +58,6 @@ describe("TodoController", () => {
       });
     });
   });
+
+  describe("updateTodo()", () => {});
 });

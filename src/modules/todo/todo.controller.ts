@@ -3,7 +3,8 @@ import { ITodoService } from "./todo.service";
 
 export interface ITodoController {
   getTodos: () => Promise<ITodo[]>;
-  create: (dto?: any) => Promise<any>;
+  createTodo: (dto?: any) => Promise<any>;
+  updateTodo(dto: any): Promise<ITodo>;
 }
 
 export class TodoController implements ITodoController {
@@ -12,17 +13,17 @@ export class TodoController implements ITodoController {
   constructor({ _todoService }: { _todoService: ITodoService }) {
     this._todoService = _todoService;
   }
+  async updateTodo(dto: any): Promise<ITodo> {
+    const result = await this._todoService.update(dto);
+    return result;
+  }
 
   async getTodos() {
     const results = await this._todoService.list();
     return results;
   }
 
-  async create(dto?: any) {
-    console.log(
-      "🚀 ~ file: todo.controller.ts ~ line 22 ~ TodoController ~ create ~ dto",
-      dto
-    );
+  async createTodo(dto?: any) {
     const result = await this._todoService.create(dto);
     return result;
   }

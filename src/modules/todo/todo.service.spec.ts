@@ -18,7 +18,13 @@ describe("TodoService", () => {
       id: number;
       description: string;
     }): Promise<ITodo> {
-      throw new Error("Function not implemented.");
+      const { id, description } = dto;
+      return Promise.resolve({
+        id,
+        description,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
     },
     delete: function (dto: { id: number }): Promise<void> {
       throw new Error("Function not implemented.");
@@ -42,6 +48,26 @@ describe("TodoService", () => {
       it("should return an emplty list of todos", async () => {
         const result = await service.list();
         expect(result.length).toEqual(0);
+      });
+    });
+  });
+
+  describe("update()", () => {
+    describe("Happy paths", () => {
+      it("should be defined", () => {
+        expect(service.update).toBeDefined();
+      });
+      it("should return an updated todo", async () => {
+        const payload = {
+          id: 1,
+          description: "I am description",
+        };
+        const result = await service.update(payload);
+        expect(result).toEqual({
+          ...payload,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
       });
     });
   });

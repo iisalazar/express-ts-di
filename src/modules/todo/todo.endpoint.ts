@@ -20,8 +20,33 @@ TodoEndpoint.get("/", async (req: Request, res: Response) => {
 });
 
 TodoEndpoint.post("/", async (req: Request, res: Response) => {
-  const result = await todoController.create(req.body);
-  return res.json({
-    data: result,
-  });
+  try {
+    const result = await todoController.createTodo(req.body);
+    return res.status(201).json({
+      data: result,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server error: ",
+    });
+  }
+});
+
+TodoEndpoint.put("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const result = await todoController.updateTodo({ id, ...req.body });
+    return res.status(201).json({
+      data: result,
+    });
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: todo.endpoint.ts ~ line 42 ~ TodoEndpoint.put ~ error",
+      error
+    );
+
+    return res.status(500).json({
+      message: "Server error: ",
+    });
+  }
 });

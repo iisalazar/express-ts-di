@@ -67,6 +67,10 @@ export class TodoRepository implements ITodoRepository {
   }
   async update(dto: UpdateTodoDTO): Promise<ITodo> {
     const { description } = dto;
+    console.log(
+      "🚀 ~ file: todo.repository.ts ~ line 70 ~ TodoRepository ~ update ~ dto",
+      dto
+    );
 
     await this.__dataSource
       .updateTable("todo")
