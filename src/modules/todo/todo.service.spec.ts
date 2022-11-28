@@ -1,14 +1,30 @@
 import { TodoService } from "./todo.service";
-import { testDataSource } from "@/test/testDataSource";
-import { getTodoRepository } from "./todo.repository";
-import { Repository } from "typeorm";
-import { Todo } from "./todo.entity";
+import { ITodoRepository } from "./todo.repository";
+import { ITodo } from "./todo.entity";
 
 describe("TodoService", () => {
   let service: TodoService;
-  let repository: Repository<Todo>;
+  let repository: ITodoRepository = {
+    find: function (): Promise<ITodo[]> {
+      return Promise.resolve([]);
+    },
+    findOne: function (params: any): Promise<ITodo> {
+      throw new Error("Function not implemented.");
+    },
+    create: function (dto: { description: string }): Promise<ITodo> {
+      throw new Error("Function not implemented.");
+    },
+    update: function (dto: {
+      id: number;
+      description: string;
+    }): Promise<ITodo> {
+      throw new Error("Function not implemented.");
+    },
+    delete: function (dto: { id: number }): Promise<void> {
+      throw new Error("Function not implemented.");
+    },
+  };
   beforeAll(() => {
-    repository = getTodoRepository(testDataSource);
     service = new TodoService({ _todoRepository: repository });
   });
 
@@ -18,19 +34,8 @@ describe("TodoService", () => {
         expect(service.list).toBeDefined();
       });
       it("should return a list of todos", async () => {
-        await repository.save([
-          {
-            description: "Todo description 1",
-          },
-          {
-            description: "Todo description 2",
-          },
-          {
-            description: "Todo description 3",
-          },
-        ]);
         const result = await service.list();
-        expect(result.length).toEqual(3);
+        expect(result.length).toEqual(0);
       });
     });
     describe("Unhappy paths", () => {

@@ -1,8 +1,8 @@
-import { Todo } from "./todo.entity";
+import { ITodo } from "./todo.entity";
 import { ITodoService } from "./todo.service";
 
 export interface ITodoController {
-  getTodos: () => Promise<Todo[]>;
+  getTodos: () => Promise<ITodo[]>;
   create: (dto?: any) => Promise<any>;
 }
 
@@ -19,6 +19,11 @@ export class TodoController implements ITodoController {
   }
 
   async create(dto?: any) {
-    return Promise.resolve({});
+    console.log(
+      "🚀 ~ file: todo.controller.ts ~ line 22 ~ TodoController ~ create ~ dto",
+      dto
+    );
+    const result = await this._todoService.create(dto);
+    return result;
   }
 }

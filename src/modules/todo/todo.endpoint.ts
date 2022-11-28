@@ -1,11 +1,12 @@
 import { Router, Request, Response } from "express";
 import { TodoController } from "./todo.controller";
 import { TodoService } from "./todo.service";
-import { getTodoRepository } from "./todo.repository";
-import { appDataSource } from "@/data-source";
-const TodoEndpoint = Router();
+import { TodoRepository } from "./todo.repository";
+import { dataSource } from "@/config/db";
 
-const todoRepository = getTodoRepository(appDataSource);
+export const TodoEndpoint = Router();
+
+const todoRepository = new TodoRepository(dataSource);
 export const todoService = new TodoService({ _todoRepository: todoRepository });
 const todoController = new TodoController({ _todoService: todoService });
 
@@ -19,7 +20,7 @@ TodoEndpoint.get("/", async (req: Request, res: Response) => {
 });
 
 TodoEndpoint.post("/", async (req: Request, res: Response) => {
-  const result = await todoController.create();
+  const result = await todoController.create(req.body);
   return res.json({
     data: result,
   });
