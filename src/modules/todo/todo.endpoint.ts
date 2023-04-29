@@ -3,7 +3,7 @@ import { TodoController } from "./todo.controller";
 import { TodoService } from "./todo.service";
 import { getTodoRepository } from "./todo.repository";
 import { appDataSource } from "@/data-source";
-const TodoEndpoint = Router();
+export const TodoEndpoint = Router();
 
 const todoRepository = getTodoRepository(appDataSource);
 export const todoService = new TodoService({ _todoRepository: todoRepository });
